@@ -1,0 +1,49 @@
+version: '2'
+services:
+  signalk:
+    container_name: signalk-server
+    image: "signalk/signalk-server:latest"
+    ports:
+     - "3000:3000"
+    volumes:
+      - "./data/signalk:/home/node/.signalk"
+  influxdb:
+    container_name: influx2
+    image: "influxdb:2.3"
+    ports:
+     - "8086:8086"
+    volumes:
+     - "./data/influxdb2:/var/lib/influxdb2"
+    environment:
+     - DOCKER_INFLUXDB_INIT_MODE=setup
+     - DOCKER_INFLUXDB_INIT_USERNAME=signalk
+     - DOCKER_INFLUXDB_INIT_PASSWORD=klangisklangis
+     - DOCKER_INFLUXDB_INIT_ORG=signalk_org
+     - DOCKER_INFLUXDB_INIT_BUCKET=signalk_bucket
+     - DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=signalk_token
+  # TODO: Split Grafana into a separate service with shared network
+  grafana:
+    container_name: grafana
+    image: "grafana/grafana:latest"
+    ports:
+     - "3001:3000"
+    volumes:
+     - "./data/grafana:/var/lib/grafana"
+    environment:
+     - GF_SECURITY_ADMIN_PASSWORD=klangisklangis
+     - GF_USERS_ALLOW_SIGN_UP=false
+     - GF_USERS_ALLOW_ORG_CREATE=false
+     - GF_USERS_AUTO_ASSIGN_ORG=true
+     - GF_USERS_AUTO_ASSIGN_ORG_ROLE=Editor
+     - GF_AUTH_ANONYMOUS_ENABLED=true
+     - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+     - GF_AUTH_ANONYMOUS_ORG_NAME=signalk_org
+     - GF_AUTH_ANONYMOUS_USER=true
+     - GF_AUTH_ANONYMOUS_ROLE=Viewer
+     - GF_AUTH_ANONYMOUS_ORG_ID=000000001
+     - GF_AUTH_ANONYMOUS_USER_ID=000000001
+     - GF_AUTH_ANONYMOUS_USER_ORG_ROLE=Viewer
+     - GF_AUTH_ANONYMOUS_USER_ORG_NAME=signalk_org
+     - GF_AUTH_ANONYMOUS_USER_ORG_ID=000000001
+     - GF_AUTH_ANONYMOUS_USER_ROLE=Viewer
+     - GF_AUTH_ANONYMOUS_USER_NAME=signalk
