@@ -1,0 +1,9 @@
+IMG_NAME="Kentron"
+FIRST_USER_NAME="pi"
+FIRST_USER_PASS="raspberry"
+DISABLE_FIRST_BOOT_USER_RENAME="1"
+TARGET_HOSTNAME="kentron"
+WPA_COUNTRY="GB"
+STAGE_LIST="stage0 stage1 stage2 stage6"
+PI_GEN_REPO="https://github.com/hatlabs/kentron-pi-gen"
+ENABLE_SSH=1
