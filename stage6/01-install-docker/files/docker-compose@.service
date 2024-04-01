@@ -1,0 +1,17 @@
+# This unit file based on this gist:
+# https://gist.github.com/mosquito/b23e1c1e5723a7fd9e6568e5cf91180f
+
+[Unit]
+Description=%i service with docker compose
+PartOf=docker.service
+After=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=true
+WorkingDirectory=/opt/containers/%i
+ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+ExecStop=/usr/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target
