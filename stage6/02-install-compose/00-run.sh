@@ -7,9 +7,7 @@ install -m 644 files/signalk-server-docker-compose.yml "${ROOTFS_DIR}/opt/contai
 # Create a data directory for signalk-server with FIRST_USER_NAME as owner
 on_chroot << EOF
 mkdir -p /opt/containers/signalk-server/data/{grafana,influxdb2,signalk}
-chown -R $FIRST_USER_NAME:$FIRST_USER_NAME /opt/containers/signalk-server/data/{influxdb2,signalk}
-# FIXME: find a better way to handle this
-chown -R 472 /opt/containers/signalk-server/data/grafana
+chown -R $FIRST_USER_NAME:$FIRST_USER_NAME /opt/containers/signalk-server/data/{influxdb2,signalk,grafana}
 EOF
 
 # Enable docker-compose@signalk-server service
